@@ -40,7 +40,9 @@ class RedisStorage:
         async with self.redis.client() as client:
             await client.hset(name, key, value)
 
-    async def set_message_mapping(self, message_id: int, user_id: int, ttl: int = 2592000) -> None:
+    async def set_message_mapping(
+        self, message_id: int, user_id: int, ttl: int = 2592000
+    ) -> None:
         """
         Creates a mapping between group message ID and user ID.
 
@@ -70,7 +72,7 @@ class RedisStorage:
         source_msg_id: int,
         target_chat_id: int,
         target_msg_id: int,
-        ttl: int = 2592000
+        ttl: int = 2592000,
     ) -> None:
         """
         Creates bidirectional mapping between messages in different chats.
@@ -86,7 +88,9 @@ class RedisStorage:
         async with self.redis.client() as client:
             await client.setex(key, ttl, value)
 
-    async def get_target_message(self, chat_id: int, message_id: int) -> tuple[int, int] | None:
+    async def get_target_message(
+        self, chat_id: int, message_id: int
+    ) -> tuple[int, int] | None:
         """
         Retrieves target message location based on source message.
 

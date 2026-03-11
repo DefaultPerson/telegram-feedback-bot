@@ -73,12 +73,16 @@ class Manager:
         return data.get("message_id", -1)
 
     async def send_message(
-            self,
-            text: str,
-            parse_mode: str | None = UNSET_PARSE_MODE,
-            disable_web_page_preview: bool | None = UNSET_DISABLE_WEB_PAGE_PREVIEW,
-            disable_notification: bool | None = None,
-            reply_markup: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply | None = None,
+        self,
+        text: str,
+        parse_mode: str | None = UNSET_PARSE_MODE,
+        disable_web_page_preview: bool | None = UNSET_DISABLE_WEB_PAGE_PREVIEW,
+        disable_notification: bool | None = None,
+        reply_markup: InlineKeyboardMarkup
+        | ReplyKeyboardMarkup
+        | ReplyKeyboardRemove
+        | ForceReply
+        | None = None,
     ) -> None:
         """
         Send a message using the bot.
@@ -125,7 +129,8 @@ class Manager:
         :raise TelegramBadRequest: If there is an issue with deleting or editing the previous message.
         """
         message_id = await self.get_old_message_id()
-        if not message_id: return  # noqa:E701
+        if not message_id:
+            return  # noqa:E701
 
         try:
             await self.bot.delete_message(

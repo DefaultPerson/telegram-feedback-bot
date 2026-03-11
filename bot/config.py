@@ -13,6 +13,7 @@ class BotConfig:
     - DEV_ID (int): The developer's user ID.
     - GROUP_ID (int): The group chat ID.
     """
+
     TOKEN: str
     DEV_ID: int
     GROUP_ID: int
@@ -28,6 +29,7 @@ class RedisConfig:
     - PORT (int): The Redis port.
     - DB (int): The Redis database number.
     """
+
     HOST: str
     PORT: int
     DB: int
@@ -50,6 +52,7 @@ class Config:
     - bot (BotConfig): The bot configuration.
     - redis (RedisConfig): The Redis configuration.
     """
+
     bot: BotConfig
     redis: RedisConfig
 

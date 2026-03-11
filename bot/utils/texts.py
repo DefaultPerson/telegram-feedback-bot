@@ -21,7 +21,9 @@ class Text(metaclass=ABCMeta):
 
         :param language_code: The language code (e.g., "ru" or "en").
         """
-        self.language_code = language_code if language_code in SUPPORTED_LANGUAGES.keys() else "en"
+        self.language_code = (
+            language_code if language_code in SUPPORTED_LANGUAGES.keys() else "en"
+        )
 
     @property
     @abstractmethod
@@ -67,11 +69,9 @@ class TextMessage(Text):
                 ),
                 "source": (
                     "Source code available at "
-                    "<a href=\"https://github.com/nessshon/support-bot\">GitHub</a>"
+                    '<a href="https://github.com/nessshon/support-bot">GitHub</a>'
                 ),
-                "user_started_bot": (
-                    f"User {hbold('{name}')} started the bot!"
-                ),
+                "user_started_bot": (f"User {hbold('{name}')} started the bot!"),
                 "user_restarted_bot": f"User {hbold('{name}')} restarted the bot!",
                 "user_stopped_bot": f"User {hbold('{name}')} stopped the bot!",
                 "user_blocked": "<b>User blocked!</b> Messages from the user are not accepted.",
@@ -111,7 +111,7 @@ class TextMessage(Text):
                 ),
                 "source": (
                     "Исходный код доступен на "
-                    "<a href=\"https://github.com/nessshon/support-bot\">GitHub</a>"
+                    '<a href="https://github.com/nessshon/support-bot">GitHub</a>'
                 ),
                 "user_started_bot": (
                     f"Пользователь {hbold('{name}')} запустил(а) бота!"

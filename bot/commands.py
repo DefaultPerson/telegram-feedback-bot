@@ -25,7 +25,7 @@ async def setup(bot: Bot, config: Config) -> None:
         ],
         "ru": [
             BotCommand(command="start", description="Перезапустить бота"),
-        ]
+        ],
     }
 
     if len(SUPPORTED_LANGUAGES) > 1:
@@ -44,19 +44,21 @@ async def setup(bot: Bot, config: Config) -> None:
             BotCommand(command="information", description="User information"),
         ],
         "ru": [
-            BotCommand(command="ban", description="Заблокировать/Разблокировать пользователя"),
-            BotCommand(command="silent", description="Активировать/Деактивировать тихий режим"),
+            BotCommand(
+                command="ban", description="Заблокировать/Разблокировать пользователя"
+            ),
+            BotCommand(
+                command="silent", description="Активировать/Деактивировать тихий режим"
+            ),
             BotCommand(command="information", description="Информация о пользователе"),
-        ]
+        ],
     }
 
     admin_commands = {
-        "en":
-            commands["en"].copy() +
-            [BotCommand(command="newsletter", description="Newsletter menu")],
-        "ru":
-            commands["ru"].copy() +
-            [BotCommand(command="newsletter", description="Меню рассылки")],
+        "en": commands["en"].copy()
+        + [BotCommand(command="newsletter", description="Newsletter menu")],
+        "ru": commands["ru"].copy()
+        + [BotCommand(command="newsletter", description="Меню рассылки")],
     }
 
     try:
@@ -94,7 +96,7 @@ async def setup(bot: Bot, config: Config) -> None:
     await bot.set_my_commands(
         commands=group_commands["ru"],
         scope=BotCommandScopeAllGroupChats(),
-        language_code="ru"
+        language_code="ru",
     )
 
 

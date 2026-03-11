@@ -14,9 +14,9 @@ router.message.filter(F.chat.type == "private")
 
 @router.message(Command("start"))
 async def start_handler(
-        message: Message,
-        manager: Manager,
-        user_data: UserData,
+    message: Message,
+    manager: Manager,
+    user_data: UserData,
 ) -> None:
     """
     Handles the /start command.
@@ -37,7 +37,9 @@ async def start_handler(
 
 
 @router.message(Command("language"))
-async def language_handler(message: Message, manager: Manager, user_data: UserData) -> None:
+async def language_handler(
+    message: Message, manager: Manager, user_data: UserData
+) -> None:
     """
     Handles the /language command.
 
@@ -55,15 +57,16 @@ async def language_handler(message: Message, manager: Manager, user_data: UserDa
         await Window.select_language(manager)
     await manager.delete_message(message)
 
+
 @router.message(
     Command("newsletter"),
     MagicData(F.event_from_user.id == F.config.bot.DEV_ID),  # type: ignore
 )
 async def newsletter_handler(
-        message: Message,
-        manager: Manager,
-        an_manager: ANManager,
-        redis: RedisStorage,
+    message: Message,
+    manager: Manager,
+    an_manager: ANManager,
+    redis: RedisStorage,
 ) -> None:
     """
     Handles the /newsletter command.

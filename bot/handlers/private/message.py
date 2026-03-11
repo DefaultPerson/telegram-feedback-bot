@@ -39,14 +39,14 @@ async def handle_edited_message(message: Message, redis: RedisStorage) -> None:
                 chat_id=target_chat_id,
                 message_id=target_msg_id,
                 text=message.text,
-                entities=message.entities
+                entities=message.entities,
             )
         elif message.caption:
             await message.bot.edit_message_caption(
                 chat_id=target_chat_id,
                 message_id=target_msg_id,
                 caption=message.caption,
-                caption_entities=message.caption_entities
+                caption_entities=message.caption_entities,
             )
     except TelegramAPIError:
         # Ignore errors (message too old, deleted, or media type changed)
@@ -56,11 +56,11 @@ async def handle_edited_message(message: Message, redis: RedisStorage) -> None:
 @router.message(F.media_group_id)
 @router.message(F.media_group_id.is_(None))
 async def handle_incoming_message(
-        message: Message,
-        manager: Manager,
-        redis: RedisStorage,
-        user_data: UserData,
-        album: Album | None = None,
+    message: Message,
+    manager: Manager,
+    redis: RedisStorage,
+    user_data: UserData,
+    album: Album | None = None,
 ) -> None:
     """
     Handles incoming messages and forwards them to the group chat.
@@ -78,12 +78,16 @@ async def handle_incoming_message(
         return
 
     # Generate user profile URL
-    url = f"https://t.me/{user_data.username[1:]}" if user_data.username and user_data.username != "-" else f"tg://user?id={user_data.id}"
+    url = (
+        f"https://t.me/{user_data.username[1:]}"
+        if user_data.username and user_data.username != "-"
+        else f"tg://user?id={user_data.id}"
+    )
 
     # Send user context message to group
     context_text = (
         f"📩 {hbold('Новое сообщение от пользователя:')}\n\n"
-        f"👤 {hbold('Имя:')} <a href=\"{url}\">{user_data.full_name}</a>\n"
+        f'👤 {hbold("Имя:")} <a href="{url}">{user_data.full_name}</a>\n'
         f"🆔 {hbold('ID:')} {hcode(user_data.id)}\n"
         f"📱 {hbold('Username:')} {user_data.username if user_data.username != '-' else 'Не указан'}"
     )
@@ -105,13 +109,13 @@ async def handle_incoming_message(
             source_chat_id=message.chat.id,
             source_msg_id=message.message_id,
             target_chat_id=manager.config.bot.GROUP_ID,
-            target_msg_id=sent_message.message_id
+            target_msg_id=sent_message.message_id,
         )
         await redis.set_bidirectional_mapping(
             source_chat_id=manager.config.bot.GROUP_ID,
             source_msg_id=sent_message.message_id,
             target_chat_id=message.chat.id,
-            target_msg_id=message.message_id
+            target_msg_id=message.message_id,
         )
     else:
         messages = await album.copy_to(
@@ -124,13 +128,13 @@ async def handle_incoming_message(
                 source_chat_id=message.chat.id,
                 source_msg_id=album.messages[idx].message_id,
                 target_chat_id=manager.config.bot.GROUP_ID,
-                target_msg_id=msg.message_id
+                target_msg_id=msg.message_id,
             )
             await redis.set_bidirectional_mapping(
                 source_chat_id=manager.config.bot.GROUP_ID,
                 source_msg_id=msg.message_id,
                 target_chat_id=message.chat.id,
-                target_msg_id=album.messages[idx].message_id
+                target_msg_id=album.messages[idx].message_id,
             )
 
     # Also save mapping for context message

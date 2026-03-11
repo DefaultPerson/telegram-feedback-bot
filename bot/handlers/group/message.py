@@ -42,14 +42,14 @@ async def handle_group_edited_message(message: Message, redis: RedisStorage) -> 
                 chat_id=target_chat_id,
                 message_id=target_msg_id,
                 text=message.text,
-                entities=message.entities
+                entities=message.entities,
             )
         elif message.caption:
             await message.bot.edit_message_caption(
                 chat_id=target_chat_id,
                 message_id=target_msg_id,
                 caption=message.caption,
-                caption_entities=message.caption_entities
+                caption_entities=message.caption_entities,
             )
     except TelegramAPIError:
         # Ignore errors (message too old, deleted, or media type changed)
@@ -58,7 +58,12 @@ async def handle_group_edited_message(message: Message, redis: RedisStorage) -> 
 
 @router.message(F.media_group_id, F.from_user[F.is_bot.is_(False)])
 @router.message(F.media_group_id.is_(None), F.from_user[F.is_bot.is_(False)])
-async def handler(message: Message, manager: Manager, redis: RedisStorage, album: Optional[Album] = None) -> None:
+async def handler(
+    message: Message,
+    manager: Manager,
+    redis: RedisStorage,
+    album: Optional[Album] = None,
+) -> None:
     """
     Handles admin replies and sends them to the respective user.
     Only processes messages that are replies to forwarded user messages.
@@ -98,13 +103,13 @@ async def handler(message: Message, manager: Manager, redis: RedisStorage, album
                 source_chat_id=message.chat.id,
                 source_msg_id=message.message_id,
                 target_chat_id=user_data.id,
-                target_msg_id=sent_msg.message_id
+                target_msg_id=sent_msg.message_id,
             )
             await redis.set_bidirectional_mapping(
                 source_chat_id=user_data.id,
                 source_msg_id=sent_msg.message_id,
                 target_chat_id=message.chat.id,
-                target_msg_id=message.message_id
+                target_msg_id=message.message_id,
             )
         else:
             sent_messages = await album.copy_to(chat_id=user_data.id)
@@ -114,13 +119,13 @@ async def handler(message: Message, manager: Manager, redis: RedisStorage, album
                     source_chat_id=message.chat.id,
                     source_msg_id=album.messages[idx].message_id,
                     target_chat_id=user_data.id,
-                    target_msg_id=sent_msg.message_id
+                    target_msg_id=sent_msg.message_id,
                 )
                 await redis.set_bidirectional_mapping(
                     source_chat_id=user_data.id,
                     source_msg_id=sent_msg.message_id,
                     target_chat_id=message.chat.id,
-                    target_msg_id=album.messages[idx].message_id
+                    target_msg_id=album.messages[idx].message_id,
                 )
 
     except TelegramAPIError as ex:

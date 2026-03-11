@@ -22,13 +22,13 @@ def select_language_markup() -> Markup:
         *[
             Button(text=text, callback_data=callback_data)
             for callback_data, text in SUPPORTED_LANGUAGES.items()
-        ], width=2
+        ],
+        width=2,
     )
     return builder.as_markup()
 
 
 class Window:
-
     @staticmethod
     async def select_language(manager: Manager) -> None:
         """

@@ -31,7 +31,9 @@ router.message.filter(
 
 
 @router.message(Command("silent"))
-async def silent_handler(message: Message, manager: Manager, redis: RedisStorage) -> None:
+async def silent_handler(
+    message: Message, manager: Manager, redis: RedisStorage
+) -> None:
     """
     Toggles silent mode for a user in the group.
     Works only as a reply to a user's message.
@@ -44,7 +46,9 @@ async def silent_handler(message: Message, manager: Manager, redis: RedisStorage
     """
     # Check if command is a reply
     if not message.reply_to_message:
-        await message.reply("⚠️ Эта команда работает только в ответ на сообщение пользователя")
+        await message.reply(
+            "⚠️ Эта команда работает только в ответ на сообщение пользователя"
+        )
         return
 
     # Get user ID from message mapping
@@ -71,7 +75,9 @@ async def silent_handler(message: Message, manager: Manager, redis: RedisStorage
 
 
 @router.message(Command("information"))
-async def information_handler(message: Message, manager: Manager, redis: RedisStorage) -> None:
+async def information_handler(
+    message: Message, manager: Manager, redis: RedisStorage
+) -> None:
     """
     Sends user information in response to the /information command.
     Works only as a reply to a user's message.
@@ -83,7 +89,9 @@ async def information_handler(message: Message, manager: Manager, redis: RedisSt
     """
     # Check if command is a reply
     if not message.reply_to_message:
-        await message.reply("⚠️ Эта команда работает только в ответ на сообщение пользователя")
+        await message.reply(
+            "⚠️ Эта команда работает только в ответ на сообщение пользователя"
+        )
         return
 
     # Get user ID from message mapping
@@ -118,7 +126,9 @@ async def ban_handler(message: Message, manager: Manager, redis: RedisStorage) -
     """
     # Check if command is a reply
     if not message.reply_to_message:
-        await message.reply("⚠️ Эта команда работает только в ответ на сообщение пользователя")
+        await message.reply(
+            "⚠️ Эта команда работает только в ответ на сообщение пользователя"
+        )
         return
 
     # Get user ID from message mapping
