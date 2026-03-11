@@ -1,0 +1,14 @@
+# Telegram Feedback Bot
+# Requires shared infrastructure: docker compose -f docker-compose.infra.yml up -d
+
+services:
+  feedback-bot:
+    build:
+      context: .
+    container_name: hm-feedback-bot
+    command: python -m bot
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
