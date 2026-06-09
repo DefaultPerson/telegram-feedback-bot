@@ -1,6 +1,6 @@
 aiogram==3.28.2
 aiogram-newsletter>=0.0.10
 cachetools==7.1.4
-environs==14.3.0
+environs==15.0.1
 pydantic==2.13.4
 redis==8.0.0
