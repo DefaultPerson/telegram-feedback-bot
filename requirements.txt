@@ -3,4 +3,4 @@ aiogram-newsletter>=0.0.12
 cachetools==7.1.4
 environs==15.0.1
 pydantic==2.13.4
-redis==8.0.0
+redis==8.1.0
